@@ -193,8 +193,122 @@ input[type="range"] {
     text-shadow: 0 0 10px var(--highlight-color);
 }
 
+/* Home Page Styles */
+.home-container {
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.main-title {
+    margin-top: 10px;
+    font-size: 3em;
+    text-shadow: 0 0 20px var(--maroon-color);
+}
+
+.disks-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+.disk-item {
+    text-align: center;
+}
+
+.disk-image-container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid var(--maroon-color);
+    box-shadow: 0 0 30px rgba(129, 1, 1, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.disk-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+
+.disk-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(129, 1, 1, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.disk-overlay span {
+    color: var(--white-color);
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.disk-image-container:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px var(--maroon-color);
+    cursor: pointer;
+}
+
+.disk-image-container:hover .disk-overlay {
+    opacity: 1;
+}
+
+.disk-image-container:hover .disk-image {
+    filter: blur(2px);
+}
+
+@media (max-width: 600px) {
+    .disks-selection {
+        gap: 30px;
+    }
+    .disk-image-container {
+        width: 200px;
+        height: 200px;
+    }
+    .main-title {
+        font-size: 2em;
+    }
+}
+
 footer {
     margin-top: auto;
     padding: 20px;
     color: var(--white-color);
+}
+
+/* Navigation Button */
+.back-home {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: white;
+    text-decoration: none;
+    z-index: 2000;
+    background: var(--maroon-color);
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    transition: background 0.3s ease;
+}
+
+.back-home:hover {
+    background: var(--highlight-color);
 }
