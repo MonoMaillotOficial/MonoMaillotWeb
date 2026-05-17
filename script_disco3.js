@@ -1,17 +1,11 @@
 const songs = [
-    { title: "Addicted", src: "songs/Addicted.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "Come true", src: "songs/Come true.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "Delaossa Cantando", src: "songs/Delaossa Cantando.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "Desbarato", src: "songs/Desbarato.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "Extraños", src: "songs/Extraños.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "Falling", src: "songs/Falling.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "I miss you", src: "songs/I miss you.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "Motorola", src: "songs/Motorola.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "My time", src: "songs/My time.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "No lies", src: "songs/No lies.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "Promesa", src: "songs/Promesa.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "Right now", src: "songs/Right now.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "Amame", src: "songs/amame.mp3", cover: "imgs/ComeTrue.png", lyrics: [] }
+    { title: "Icaro", src: "songs/Icaro.mp3", cover: "imgs/Logo.png", lyrics: [] },
+    { title: "Inentions", src: "songs/Inentions.mp3", cover: "imgs/Logo.png", lyrics: [] },
+    { title: "Lagarto", src: "songs/Lagarto.mp3", cover: "imgs/Logo.png", lyrics: [] },
+    { title: "Me mata", src: "songs/ME MATA.mp3", cover: "imgs/Logo.png", lyrics: [] },
+    { title: "Me tienes loco", src: "songs/Me tienes loco.mp3", cover: "imgs/Logo.png", lyrics: [] },
+    { title: "TOP", src: "songs/TOP.mp3", cover: "imgs/Logo.png", lyrics: [] },
+    { title: "Villancico", src: "songs/villancico.mp3", cover: "imgs/Logo.png", lyrics: [] }
 ];
 
 let songIndex = 0;
