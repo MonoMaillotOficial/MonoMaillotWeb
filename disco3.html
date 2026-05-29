@@ -4,22 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APS - Mono Maillot</title>
+    <link rel="icon" href="imgs/Logo.png" type="image/png">
     <link rel="stylesheet" href="estilos/style.css">
+    <script src="global-player.js" defer></script>
     <script src="script_disco3.js" defer></script>
 </head>
 <body>
-    <a href="index.html" class="back-home">🏠 Inicio</a>
-
     <!-- Imágenes en las esquinas -->
-    <img src="imgs/Abelcok.png" class="corner-img top-left" alt="Abelcok">
-    <img src="imgs/Farlopa.png" class="corner-img top-right" alt="Farlopa">
-    <img src="imgs/Raulitas.png" class="corner-img bottom-left" alt="Raulitas">
-    <img src="imgs/young.png" class="corner-img bottom-right" alt="Young">
+    <img src="imgs/Abelcok.png" class="corner-img top-left" alt="Abel" title="Abel - El ***">
+    <img src="imgs/Farlopa.png" class="corner-img top-right" alt="Oscar" title="Oscar - El calvo">
+    <img src="imgs/Raulitas.png" class="corner-img bottom-left" alt="Raul" title="Raul - El llamadas infinitas">
+    <img src="imgs/young.png" class="corner-img bottom-right" alt="Manu" title="Manu - El gafotas ciego">
 
     <div class="container">
         <header>
-             <img src="imgs/Logo.png"  class="image" alt="Mono Maillot">    
+            <a href="index.html" class="brand-logo-link" title="Ir al inicio">
+                <img src="imgs/Logo.png" class="image brand-logo" alt="Mono Maillot" title="Monomaillor">
+            </a>
         </header>
+        <section class="album-hero" aria-label="Portada del disco">
+            <img src="imgs/Logo.png" alt="Portada de APS">
+            <div>
+                <span>Disco</span>
+                <h1>APS</h1>
+            </div>
+        </section>
+        <div id="tracklist" class="tracklist">
+            <div class="tracklist-header">
+                <div>
+                    <h2>Lista de canciones</h2>
+                    <p>Haz clic en una canción para ver la letra y reproducirla.</p>
+                </div>
+            </div>
+        </div>
+
         <section id="player-container">
             <div class="player">
                 <div class="cover">

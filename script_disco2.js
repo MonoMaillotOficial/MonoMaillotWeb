@@ -1,7 +1,7 @@
 const songs = [
     { title: "Addicted", src: "songs/Addicted.mp3", cover: "imgs/disco2.png", lyrics: [] },
     { title: "Come true", src: "songs/Come true.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "Delaossa Cantando", src: "songs/Delaossa Cantando.mp3", cover: "imgs/disco2.png", lyrics: [] },
+    { title: "Peligrosa", src: "songs/Delaossa Cantando.mp3", cover: "imgs/disco2.png", lyrics: [] },
     { title: "Desbarato", src: "songs/Desbarato.mp3", cover: "imgs/disco2.png", lyrics: [] },
     { title: "Extraños", src: "songs/Extraños.mp3", cover: "imgs/disco2.png", lyrics: [] },
     { title: "Falling", src: "songs/Falling.mp3", cover: "imgs/disco2.png", lyrics: [] },
@@ -29,24 +29,46 @@ const coverImg = document.getElementById("cover-img");
 const songTitle = document.getElementById("song-title");
 const downloadLink = document.getElementById("download");
 const lyricsContent = document.getElementById("lyrics-content");
+const tracklistContainer = document.getElementById("tracklist");
+const playerContainer = document.getElementById("player-container");
+let expandedIndex = null;
+
+if (typeof globalPlayer !== "undefined") {
+    globalPlayer.registerSongs("disco2", songs);
+    if (globalPlayer.currentDisco === "disco2" && globalPlayer.currentSongIndex !== null) {
+        songIndex = globalPlayer.currentSongIndex;
+    }
+}
 
 loadSong(songs[songIndex]);
+renderTracklist();
 
 function loadSong(song) {
     songTitle.innerText = song.title;
-    audio.src = song.src;
+    if (typeof globalPlayer === "undefined") {
+        audio.src = song.src;
+    }
     coverImg.src = song.cover;
     downloadLink.href = song.src;
     loadLyrics(song.lyrics);
 }
 
-function playSong() {
-    audio.play();
+function playSong(startTime = audio.currentTime || 0) {
+    if (typeof globalPlayer !== "undefined") {
+        globalPlayer.playSong("disco2", songIndex, startTime);
+    } else {
+        audio.currentTime = startTime;
+        audio.play();
+    }
     playBtn.textContent = "⏸";
 }
 
 function pauseSong() {
-    audio.pause();
+    if (typeof globalPlayer !== "undefined") {
+        globalPlayer.pause();
+    } else {
+        audio.pause();
+    }
     playBtn.textContent = "▶";
 }
 
@@ -56,7 +78,7 @@ function prevSong() {
         songIndex = songs.length - 1;
     }
     loadSong(songs[songIndex]);
-    playSong();
+    playSong(0);
 }
 
 function nextSong() {
@@ -65,7 +87,7 @@ function nextSong() {
         songIndex = 0;
     }
     loadSong(songs[songIndex]);
-    playSong();
+    playSong(0);
 }
 
 function updateProgress(e) {
@@ -79,13 +101,15 @@ function updateProgress(e) {
 }
 
 function setProgress() {
-    const width = this.value;
+    if (!audio.duration) return;
     const duration = audio.duration;
-    audio.currentTime = (width / 100) * duration;
+    const progressValue = parseFloat(progress.value) || 0;
+    audio.currentTime = (progressValue / 100) * duration;
 }
 
 function setVolume() {
-    audio.volume = this.value;
+    const volumeValue = parseFloat(volumeSlider.value) || 1;
+    audio.volume = Math.max(0, Math.min(1, volumeValue));
 }
 
 function toggleMute() {
@@ -117,6 +141,79 @@ function loadLyrics(lyrics) {
     });
 }
 
+function renderTracklist() {
+    if (!tracklistContainer) return;
+    tracklistContainer.innerHTML = "";
+
+    songs.forEach((song, index) => {
+        const trackItem = document.createElement("article");
+        trackItem.className = "track-item";
+        if (index === songIndex) trackItem.classList.add("active");
+        if (index === expandedIndex) trackItem.classList.add("expanded");
+        trackItem.dataset.index = index;
+
+        const trackRow = document.createElement("div");
+        trackRow.className = "track-row";
+        trackRow.innerHTML = `
+            <span class="track-number">${String(index + 1).padStart(2, "0")}</span>
+            <div class="track-art"><img src="${song.cover}" alt="${song.title}"></div>
+            <div class="track-info">
+                <h3>${song.title}</h3>
+                <p>${song.lyrics && song.lyrics.length ? `${song.lyrics.length} líneas` : "Letra no disponible"}</p>
+            </div>
+        `;
+        trackItem.appendChild(trackRow);
+
+        const detailsPanel = document.createElement("div");
+        detailsPanel.className = "track-details";
+        if (index === expandedIndex) {
+            detailsPanel.style.maxHeight = "1200px";
+            detailsPanel.style.opacity = "1";
+        }
+
+        trackItem.appendChild(detailsPanel);
+        tracklistContainer.appendChild(trackItem);
+    });
+}
+
+function updatePlayerDisplay() {
+    if (playerContainer && songIndex >= 0) {
+        playerContainer.style.display = "flex";
+    } else if (playerContainer) {
+        playerContainer.style.display = "none";
+    }
+}
+
+
+
+function selectTrack(index, openPanel = true) {
+    const isCurrentGlobalTrack = typeof globalPlayer !== "undefined"
+        && globalPlayer.currentDisco === "disco2"
+        && globalPlayer.currentSongIndex === index;
+
+    songIndex = index;
+    loadSong(songs[songIndex]);
+    playSong(isCurrentGlobalTrack ? audio.currentTime || 0 : 0);
+    expandedIndex = openPanel ? index : null;
+    renderTracklist();
+    updatePlayerDisplay();
+    const player = document.getElementById("player-container");
+    if (player) {
+        player.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
+
+if (tracklistContainer) {
+    tracklistContainer.addEventListener("click", (e) => {
+        const clickedItem = e.target.closest(".track-item");
+        if (!clickedItem) return;
+
+        const clickedIndex = Number(clickedItem.dataset.index);
+
+        selectTrack(clickedIndex, true);
+    });
+}
+
 function syncLyrics(currentTime) {
     const lyrics = songs[songIndex].lyrics;
     if (!lyrics || lyrics.length === 0) return;
@@ -144,19 +241,62 @@ function syncLyrics(currentTime) {
     }
 }
 
-playBtn.addEventListener("click", () => {
-    const isPlaying = playBtn.textContent === "⏸";
-    if (isPlaying) {
-        pauseSong();
-    } else {
-        playSong();
+// Add event listeners with delegation to handle DOM reorganization
+document.addEventListener("click", (e) => {
+    // Play button
+    if (e.target.classList.contains("play")) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (audio.paused) {
+            playSong();
+        } else {
+            pauseSong();
+        }
+    }
+    // Prev button
+    if (e.target.id === "prev" || e.target.closest("#prev")) {
+        e.preventDefault();
+        e.stopPropagation();
+        prevSong();
+    }
+    // Next button
+    if (e.target.id === "next" || e.target.closest("#next")) {
+        e.preventDefault();
+        e.stopPropagation();
+        nextSong();
+    }
+    // Mute button
+    if (e.target.classList.contains("mute")) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleMute();
     }
 });
 
-prevBtn.addEventListener("click", prevSong);
-nextBtn.addEventListener("click", nextSong);
 audio.addEventListener("timeupdate", updateProgress);
-audio.addEventListener("ended", nextSong);
-progress.addEventListener("input", setProgress);
-volumeSlider.addEventListener("input", setVolume);
-muteBtn.addEventListener("click", toggleMute);
+if (typeof globalPlayer === "undefined") {
+    audio.addEventListener("ended", handleTrackEnd);
+}
+audio.addEventListener("play", () => {
+    playBtn.textContent = "⏸";
+});
+audio.addEventListener("pause", () => {
+    playBtn.textContent = "▶";
+});
+progress.addEventListener("change", setProgress);
+volumeSlider.addEventListener("change", setVolume);
+
+document.addEventListener("global-player-track-change", (event) => {
+    if (event.detail.disco !== "disco2") return;
+    songIndex = event.detail.songIndex;
+    loadSong(songs[songIndex]);
+    renderTracklist();
+    updatePlayerDisplay();
+});
+
+function handleTrackEnd() {
+    const nextIndex = (songIndex + 1) % songs.length;
+    selectTrack(nextIndex, false);
+    renderTracklist();
+    updatePlayerDisplay();
+}
