@@ -1,17 +1,17 @@
 const songs = [
-    { title: "Addicted", src: "songs/Addicted.mp3", cover: "imgs/disco2.png", lyrics: [] },
+    { title: "Addicted", src: "songs/Addicted.mp3", cover: "imgs/AddictedPortada.png", lyrics: [] },
     { title: "Come true", src: "songs/Come true.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "Peligrosa", src: "songs/Delaossa Cantando.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "Desbarato", src: "songs/Desbarato.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "Extraños", src: "songs/Extraños.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "Falling", src: "songs/Falling.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "I miss you", src: "songs/I miss you.mp3", cover: "imgs/disco2.png", lyrics: [] },
-    { title: "Motorola", src: "songs/Motorola.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "My time", src: "songs/My time.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "No lies", src: "songs/No lies.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "Promesa", src: "songs/Promesa.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "Right now", src: "songs/Right now.mp3", cover: "imgs/ComeTrue.png", lyrics: [] },
-    { title: "Amame", src: "songs/amame.mp3", cover: "imgs/ComeTrue.png", lyrics: [] }
+    { title: "Peligrosa", src: "songs/Delaossa Cantando.mp3", cover: "imgs/PeligrosaPortada.png", lyrics: [] },
+    { title: "Desbarato", src: "songs/Desbarato.mp3", cover: "imgs/DesbaratoPortada.png", lyrics: [] },
+    { title: "Extraños", src: "songs/Extraños.mp3", cover: "imgs/ExtranosPortada.png", lyrics: [] },
+    { title: "Falling", src: "songs/Falling.mp3", cover: "imgs/FallingPortada.png", lyrics: [] },
+    { title: "I miss you", src: "songs/I miss you.mp3", cover: "imgs/ImissyouPortada.png", lyrics: [] },
+    { title: "Motorola", src: "songs/Motorola.mp3", cover: "imgs/MotorolaPortada.png", lyrics: [] },
+    { title: "My time", src: "songs/My time.mp3", cover: "imgs/MytimePortada.png", lyrics: [] },
+    { title: "No lies", src: "songs/No lies.mp3", cover: "imgs/NoliesPortada.png", lyrics: [] },
+    { title: "Promesa", src: "songs/Promesa.mp3", cover: "imgs/PromesaPortada.png", lyrics: [] },
+    { title: "Right now", src: "songs/Right now.mp3", cover: "imgs/RightnowPortada.png", lyrics: [] },
+    { title: "Amame", src: "songs/amame.mp3", cover: "imgs/AmamePortada.png", lyrics: [] }
 ];
 
 let songIndex = 0;
