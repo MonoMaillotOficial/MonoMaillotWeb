@@ -17,6 +17,7 @@ class GlobalPlayer {
         this.restoreTried = false;
 
         this.createToastUI();
+        this.restoreToastState();
         this.readState();
         this.attachEvents();
         this.restoreSavedSong();
@@ -35,6 +36,7 @@ class GlobalPlayer {
 
         document.body.insertAdjacentHTML("beforeend", `
             <aside id="global-player-toast" class="global-player-toast hidden" aria-live="polite">
+                <button id="toast-toggle" class="toast-toggle" type="button" title="Colapsar/Expandir" aria-label="Colapsar/Expandir">▼</button>
                 <div class="toast-cover">
                     <img id="toast-cover-img" src="imgs/Logo.png" alt="">
                 </div>
@@ -55,6 +57,7 @@ class GlobalPlayer {
     }
 
     attachEvents() {
+        document.getElementById("toast-toggle")?.addEventListener("click", () => this.toggleToastCollapse());
         document.getElementById("toast-play")?.addEventListener("click", () => this.togglePlayPause());
         document.getElementById("toast-next")?.addEventListener("click", () => this.nextSong());
         document.getElementById("toast-prev")?.addEventListener("click", () => this.prevSong());
@@ -170,8 +173,32 @@ class GlobalPlayer {
         localStorage.removeItem(GLOBAL_PLAYER_STORAGE_KEY);
     }
 
+    toggleToastCollapse() {
+        const toast = document.getElementById("global-player-toast");
+        const toggleBtn = document.getElementById("toast-toggle");
+        if (!toast || !toggleBtn) return;
+
+        const isCollapsed = toast.classList.toggle("collapsed");
+        toggleBtn.textContent = isCollapsed ? "◀" : "▶";
+        localStorage.setItem("toastCollapsed", isCollapsed.toString());
+    }
+
+    restoreToastState() {
+        const isCollapsed = localStorage.getItem("toastCollapsed") === "true";
+        const toast = document.getElementById("global-player-toast");
+        const toggleBtn = document.getElementById("toast-toggle");
+        
+        if (isCollapsed && toast && toggleBtn) {
+            toast.classList.add("collapsed");
+            toggleBtn.textContent = "◀";
+        } else if (toggleBtn) {
+            toggleBtn.textContent = "▶";
+        }
+    }
+
     showToast() {
         document.getElementById("global-player-toast")?.classList.remove("hidden");
+        this.restoreToastState();
     }
 
     hideToast() {
